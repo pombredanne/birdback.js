@@ -1,0 +1,3 @@
+[submodule "vendor/jsbn"]
+    path = vendor/jsbn
+    url = https://github.com/jasondavies/jsbn.git
