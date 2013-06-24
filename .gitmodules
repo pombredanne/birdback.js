@@ -4,3 +4,6 @@
 [submodule "tests/vendor/mocha"]
     path = tests/mocha
     url = https://github.com/visionmedia/mocha.git
+[submodule "tests/vendor/expect.js"]
+    path = tests/expect.js
+    url = https://github.com/LearnBoost/expect.js.git
