@@ -1,9 +1,9 @@
 [submodule "vendor/jsbn"]
 	path = vendor/jsbn
 	url = https://github.com/jasondavies/jsbn.git
-[submodule "tests/vendor/mocha"]
-	path = tests/vendor/mocha
+[submodule "tests/static/vendor/mocha"]
+	path = tests/static/vendor/mocha
 	url = https://github.com/visionmedia/mocha.git
-[submodule "tests/vendor/expect.js"]
-	path = tests/vendor/expect.js
+[submodule "tests/static/vendor/expect.js"]
+	path = tests/static/vendor/expect.js
 	url = https://github.com/LearnBoost/expect.js.git
