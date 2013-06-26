@@ -67,7 +67,7 @@ Birdback.prototype.extractIntegers = function (asn1) {
  */
 Birdback.prototype.encrypt = function (value) {
     "use strict";
-    return this.rsa.encrypt(value);
+    return hex2b64(this.rsa.encrypt(value));
 };
 
 
