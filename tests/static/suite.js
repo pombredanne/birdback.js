@@ -46,11 +46,21 @@ suite('Birdback', function () {
     });
 
     suite('encrypt', function () {
-        test('should encrypt string from a valid key', function () {
+        test('should return a cipher with correct length', function () {
             var birdback = new Birdback(publicKey),
                 plain = 'my secret text',
                 cipher = birdback.encrypt(plain);
-            expect(cipher.length).to.be(256);
+            expect(cipher.length).to.be(344);
+        });
+
+        test('should return a decryptable cipher', function (done) {
+            var birdback = new Birdback(publicKey),
+                plain = 'my secret text',
+                cipher = birdback.encrypt(plain);
+            $.post('/decrypt/', {cipher: cipher}, function (data) {
+                expect(data).to.be(plain);
+                done();
+            });
         });
     });
 
