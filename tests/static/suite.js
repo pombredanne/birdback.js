@@ -88,7 +88,15 @@ suite('Birdback', function () {
 });
 
 
+// Sets the runner and run tests as globals that can be accessed by Ghost.py.
+var __mocha_tests__ = [],
+     __mocha_runner__,
+    isMochaRunning = function () {
+        return __mocha_runner__ !== null;
+    }
+
 document.addEventListener("DOMContentLoaded", function () {
-    "use strict";
-    mocha.run();
-});
+     __mocha_runner__ = mocha.run().globals(['stats', 'report']).on('test end', function (test) {
+        __mocha_tests__.push({title: test.title, state: test.state});
+    });
+}, false);
