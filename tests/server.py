@@ -5,7 +5,7 @@ import base64
 from Crypto.PublicKey import RSA
 from Crypto.Util import number
 
-from flask import Flask, request
+from flask import Flask, jsonify, request
 
 
 app = Flask(__name__)
@@ -43,9 +43,7 @@ A7Pt3/rmwC1pdjsvk25yL+rtLJvqYhjICgT1FoslMUJIjuqHDXC+Qrw=
 -----END RSA PRIVATE KEY-----"""
 
 
-@app.route('/decrypt/', methods=['POST'])
-def decrypt():
-    cipher = request.form.get('cipher')
+def decrypt_cipher(cipher):
     key = RSA.importKey(private_key)
     cipher_string = base64.b64decode(cipher)
     cipher_long = number.bytes_to_long(cipher_string)
@@ -53,9 +51,20 @@ def decrypt():
 
     # Removes "noises"
     r = re.compile('([a-z0-9\ ]{5,})$')
-    plain = r.search(decrypted).group(0)
+    return r.search(decrypted).group(0)
 
-    return plain, 200
+
+@app.route('/decrypt/', methods=['POST'])
+def decrypt():
+    cipher = request.form.get('cipher')
+    return decrypt_cipher(cipher), 200
+
+
+@app.route('/form/', methods=['POST'])
+def post():
+    decrypted_number = decrypt_cipher(request.form.get('number'))
+    return jsonify(received_values=request.form,
+        decrypted_number=decrypted_number)
 
 
 if __name__ == "__main__":

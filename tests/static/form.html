@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Birdback.js test form</title>
+    </head>
+    <body>
+        <form method="post" action="/form/">
+            <input name="name" placeholder="firstname lastname" required />
+            <input name="number" placeholder="cardnumber" required data-encrypt />
+            <input type="submit" value="send" />
+        </form>
+        <script type="text/javascript" src="./birdback.min.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize new Birdback instance from a valid pubic key
+                var publicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8KIZEQhdmodJUTFzNGBvLz2NZk8B8O3FbkWbKhumLhv14CDkuSd9GGTz9YRKFDIyE5BFJqNJftdKDyuyaOALNtiqBB5Xtb3LiJ1Ut6H/Q2ACmVuHJ72jsvY4fNoznWCEIJJA3ld/IofXpPsIbmY/rvnu6NCfsQ7aZB7DvujrfySeVVbRU5/wYU/b/8wM2ZraG9NOEnFZAReO9CfWTKZgxjCe3z86M8F1vD26ic0Nfp6VSv1TMcDTncE+wnLjSPK+J509S+tr4x6EWwVjpN55AUiFFh4jEMJWI/yELZjnEikLI3fG7SenchNMy09BQrVZ5APR9dn9B/4Gv076cuW98QIDAQAB';
+                    birdback = new Birdback(publicKey),
+
+                    numberInput = document.querySelector('[name=number]');
+
+                // Adds luhn validation
+                numberInput.addEventListener('input', function (e) {
+                    var value = numberInput.value;
+                    if (Birdback.luhn.validate(value)) {
+                        numberInput.setCustomValidity('');
+                    } else {
+                        numberInput.setCustomValidity('Invalid card number');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
