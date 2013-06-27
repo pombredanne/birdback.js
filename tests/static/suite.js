@@ -14,6 +14,25 @@ suite('Birdback', function () {
         expect(function () { return new Birdback(publicKey); }).to.not.throwException();
     });
 
+    suite('createElement', function () {
+        test('should return right html tag name', function () {
+            var form = Birdback.createElement('form');
+            expect(form.tagName).to.be('FORM');
+        });
+
+        test('should correctly set given attributes', function () {
+            var input = Birdback.createElement('input', {name: 'inputname', id: 'inputid'});
+            expect(input.id).to.be('inputid');
+            expect(input.getAttribute('name')).to.be('inputname');
+        });
+
+        test('should append given children', function () {
+            var input = Birdback.createElement('input'),
+                form = Birdback.createElement('form', {}, [input]);
+            expect(form.childNodes.length).to.be(1);
+        });
+    });
+
     suite('buildKey', function () {
         var birdback = new Birdback(publicKey);
 

@@ -52,6 +52,34 @@ Birdback.prototype.buildKey = function (asn1) {
 
 
 /**
+ * Creates a new HTML element for given tag name and attributes.
+ *
+ * @param string tagName The element tage name.
+ * @param Object attributes The elemnt attributes.
+ */
+Birdback.createElement = function (tagName, attributes, children) {
+    "use strict";
+    var element = document.createElement(tagName),
+        attribute,
+        value,
+        i,
+        length;
+    for (attribute in attributes) {
+        if (attributes.hasOwnProperty(attribute)) {
+            value = attributes[attribute];
+            element.setAttribute(attribute, value);
+        }
+    }
+    if (children) {
+        for (i = 0, length = children.length; i < length; i += 1) {
+            element.appendChild(children[i]);
+        }
+    }
+    return element;
+};
+
+
+/**
  * Extracts integers from asn1.
  *
  * @param ASN1 asn1 The ASN1 object.
