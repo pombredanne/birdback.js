@@ -83,6 +83,65 @@ suite('Birdback', function () {
         });
     });
 
+
+    suite('form', function () {
+        var birdback = new Birdback(publicKey),
+            sensibleInput,
+            plainInput,
+            form;
+
+        beforeEach(function () {
+            sensibleInput = Birdback.createElement('input', {name: 'sensible', value: 'secret value', 'data-encrypt': ''});
+            plainInput = Birdback.createElement('input', {name: 'plain', value: 'plain text'});
+            form = Birdback.createElement('form', {}, [sensibleInput, plainInput]);
+        });
+
+        suite('encryptField', function () {
+            test('should only secure input element', function () {
+                var textarea = Birdback.createElement('textarea');
+                expect(birdback.encryptField).withArgs(textarea).to.throwException();
+            });
+
+            test('should return an hidden input with encryped value', function () {
+                var hidden = birdback.encryptField(sensibleInput);
+                expect(hidden.getAttribute('name')).to.be('sensible');
+                expect(hidden.value).not.to.be('secret value');
+            });
+
+            test('should unset name attribute of given input', function () {
+                birdback.encryptField(sensibleInput);
+                expect(sensibleInput.getAttribute('name')).to.be(null);
+            });
+        });
+
+        suite('encryptForm', function () {
+            test('should encrypt sensible fields', function () {
+                birdback.encryptForm(form);
+                expect(form.childNodes.length).to.be(3);
+                expect(sensibleInput.hasAttribute('name')).to.be(false);
+            });
+
+            test('should not encrypt other fields', function () {
+                birdback.encryptForm(form);
+                expect(plainInput.value).to.be('plain text');
+            });
+        });
+
+        suite('secureForm', function () {
+            test('should force given form to encrypt on submit', function (done) {
+                birdback.secureForm(form);
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                }, false);
+                var event = document.createEvent("HTMLEvents");
+                event.initEvent('submit', true, true);
+                form.dispatchEvent(event);
+                expect(form.childNodes.length).to.be(3);
+                done();
+            });
+        });
+    });
+
     suite('luhn', function () {
         suite('calculate', function () {
             test('should return 1 for 450060000000006 digits', function () {

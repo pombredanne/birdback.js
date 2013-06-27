@@ -117,6 +117,61 @@ Birdback.prototype.encrypt = function (value) {
 };
 
 
+/**
+ * Encrypts given fields value and renders it as an hidden field.
+ *
+ * @param HTMLInputElement input The field to encrypt.
+ */
+Birdback.prototype.encryptField = function (input) {
+    "use strict";
+    var hidden,
+        cipher;
+    if (input.tagName !== 'INPUT') {
+        throw new Error('Only input can be encrypted');
+    }
+    cipher = this.encrypt(input.value);
+    hidden = Birdback.createElement('input', {type: 'hidden', value: cipher, name: input.getAttribute('name')});
+    input.removeAttribute('name');
+    return hidden;
+};
+
+
+/**
+ * Encrypts given form.
+ *
+ * @param HTMLFormElement form The form to secure.
+ */
+Birdback.prototype.encryptForm = function (form) {
+    "use strict";
+    var element,
+        elements = form.getElementsByTagName('*'),
+        i,
+        length;
+    for (i = 0, length = elements.length; i < length; i += 1) {
+        element = elements[i];
+        if (element.hasAttribute('data-encrypt')) {
+            form.appendChild(this.encryptField(element));
+        }
+    }
+    return this;
+};
+
+
+/**
+ * Prevents given form to send plain sensible data.
+ *
+ * @param HTMLFormElement form The form to secure.
+ */
+Birdback.prototype.secureForm = function (form) {
+    "use strict";
+    var self = this;
+    Birdback.addEventListener(form, 'submit', function (e) {
+        self.encryptForm(form);
+    });
+    return this;
+};
+
+
 Birdback.luhn = {};
 
 
