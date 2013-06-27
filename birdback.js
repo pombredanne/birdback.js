@@ -17,10 +17,10 @@ var Birdback = function (key) {
 
 
 /**
-* Builds an RSAKey object from given ASN1.
-*
-* @param ASN1 asn1 The ASN1 object.
-*/
+ * Builds an RSAKey object from given ASN1.
+ *
+ * @param ASN1 asn1 The ASN1 object.
+ */
 Birdback.prototype.buildKey = function (asn1) {
     "use strict";
     var integers = this.extractIntegers(asn1),
@@ -35,10 +35,10 @@ Birdback.prototype.buildKey = function (asn1) {
 
 
 /**
-* Extracts integers from asn1.
-*
-* @param ASN1 asn1 The ASN1 object.
-*/
+ * Extracts integers from asn1.
+ *
+ * @param ASN1 asn1 The ASN1 object.
+ */
 Birdback.prototype.extractIntegers = function (asn1) {
     "use strict";
     var parts = [],
@@ -60,6 +60,7 @@ Birdback.prototype.extractIntegers = function (asn1) {
     return parts;
 };
 
+
 /**
  * Encrypts the given value.
  *
@@ -75,10 +76,10 @@ Birdback.luhn = {};
 
 
 /**
-* Calculates Luhn value for given digits.
-*
-* @param string digits The digits.
-*/
+ * Calculates Luhn value for given digits.
+ *
+ * @param string digits The digits.
+ */
 Birdback.luhn.calculate = function (digits) {
     "use strict";
     var sum = 0,
@@ -105,10 +106,10 @@ Birdback.luhn.calculate = function (digits) {
 
 
 /**
-* Validates Luhn for given digits.
-*
-* @param string digits The digits.
-*/
+ * Validates Luhn for given digits.
+ *
+ * @param string digits The digits.
+ */
 Birdback.luhn.validate = function (digits) {
     "use strict";
     var digit = parseInt(digits.substring(digits.length - 1, digits.length), 10),
