@@ -17,6 +17,23 @@ var Birdback = function (key) {
 
 
 /**
+ * Adds an event listener to given element.
+ *
+ * @param HTMLElement element The element.
+ * @param string eventName The event name.
+ * @param function handler The handler.
+ */
+Birdback.addEventListener = function (element, eventName, handler) {
+    "use strict";
+    if (element.addEventListener) {
+        element.addEventListener(eventName, handler, false);
+    } else if (element.attachEvent) {
+        element.attachEvent('on' + eventName, handler);
+    }
+};
+
+
+/**
  * Builds an RSAKey object from given ASN1.
  *
  * @param ASN1 asn1 The ASN1 object.
