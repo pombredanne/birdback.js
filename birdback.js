@@ -5,7 +5,10 @@
  */
 var Birdback = function (key) {
     "use strict";
-    var asn1;
+    var asn1,
+        forms = document.getElementsByTagName('FORM'),
+        i,
+        length = forms.length;
     this.invalidKeyMessage = 'Invalid encryption key.';
     try {
         asn1 = ASN1.decode(b64toBA(key));
@@ -13,6 +16,9 @@ var Birdback = function (key) {
         throw new Error(this.invalidKeyMessage);
     }
     this.rsa = this.buildKey(asn1);
+    for (i = 0; i < length; i += 1) {
+        this.secureForm(forms[0]);
+    }
 };
 
 

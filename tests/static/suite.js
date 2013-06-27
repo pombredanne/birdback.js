@@ -14,6 +14,24 @@ suite('Birdback', function () {
         expect(function () { return new Birdback(publicKey); }).to.not.throwException();
     });
 
+    test('should secure all document forms', function (done) {
+        var sensibleInput = Birdback.createElement('input', {name: 'sensible', value: 'secret value', 'data-encrypt': ''}),
+            form = Birdback.createElement('form', {}, [sensibleInput]),
+            event = document.createEvent("HTMLEvents"),
+            birdback;
+        document.body.appendChild(form);
+        console.log(document.getElementsByTagName('FORM'));
+        birdback = new Birdback(publicKey);
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            expect(form.childNodes.length).to.be(2);
+            expect(sensibleInput.hasAttribute('name')).to.be(false);
+            done();
+        }, false);
+        event.initEvent('submit', true, true);
+        form.dispatchEvent(event);
+    });
+
     suite('createElement', function () {
         test('should return right html tag name', function () {
             var form = Birdback.createElement('form');
