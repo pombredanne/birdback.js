@@ -160,6 +160,13 @@ suite('Birdback', function () {
         });
     });
 
+    suite('isSupported', function () {
+        test('should be true', function () {
+            var birdback = new Birdback(publicKey);
+            expect(birdback.isSupported()).to.be(true);
+        });
+    });
+
     suite('luhn', function () {
         suite('calculate', function () {
             test('should return 1 for 450060000000006 digits', function () {
