@@ -164,6 +164,21 @@ Birdback.prototype.encryptForm = function (form) {
 
 
 /**
+ * Checks if this lib is supported by the browser.
+ *
+ */
+Birdback.prototype.isSupported = function () {
+    "use strict";
+    try {
+        this.encrypt('test');
+    } catch (e) {
+        return false;
+    }
+    return true;
+};
+
+
+/**
  * Prevents given form to send plain sensible data.
  *
  * @param HTMLFormElement form The form to secure.
