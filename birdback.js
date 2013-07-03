@@ -193,6 +193,17 @@ Birdback.prototype.secureForm = function (form) {
 };
 
 
+/**
+ * Validates given card number.
+ *
+ * @param string number The card number.
+ */
+Birdback.validateCardNumber = function (number) {
+    "use strict";
+    return Birdback.luhn.validate(number);
+};
+
+
 Birdback.luhn = {};
 
 

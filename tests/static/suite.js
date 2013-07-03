@@ -167,6 +167,16 @@ suite('Birdback', function () {
         });
     });
 
+    suite('validateCardNumber', function () {
+        test('should return true when valid digits are given', function () {
+            expect(Birdback.validateCardNumber('4500600000000061')).to.be(true);
+        });
+
+        test('should return false when invalid digits are given', function () {
+            expect(Birdback.validateCardNumber('7500600000000061')).to.be(false);
+        });
+    });
+
     suite('luhn', function () {
         suite('calculate', function () {
             test('should return 1 for 450060000000006 digits', function () {

@@ -25,7 +25,7 @@ Validate card number
     var numberInput = document.querySelector('[name=cardnumber]');
     numberInput.addEventListener('input', function (e) {
         var value = numberInput.value;
-        if (Birdback.luhn.validate(value)) {
+        if (Birdback.validateCardNumber(value)) {
             numberInput.setCustomValidity('');
         } else {
             numberInput.setCustomValidity('Invalid card number');
