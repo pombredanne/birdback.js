@@ -36,6 +36,8 @@ Birdback.addEventListener = function (element, eventName, handler) {
     } else if (element.attachEvent) {
         eventName = (eventName === 'DOMContentLoaded') ? 'onreadystatechange' : "on" + eventName;
         element.attachEvent(eventName, handler);
+    } else {
+        element['on' + eventName] = handler;
     }
 };
 
