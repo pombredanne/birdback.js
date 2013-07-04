@@ -20,7 +20,6 @@ suite('Birdback', function () {
             event = document.createEvent("HTMLEvents"),
             birdback;
         document.body.appendChild(form);
-        console.log(document.getElementsByTagName('FORM'));
         birdback = new Birdback(publicKey);
         form.addEventListener('submit', function (e) {
             e.preventDefault();
