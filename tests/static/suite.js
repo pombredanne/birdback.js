@@ -21,7 +21,7 @@ suite('Birdback', function () {
             birdback;
         document.body.appendChild(form);
         birdback = new Birdback(publicKey);
-        form.addEventListener('submit', function (e) {
+        Birdback.addEventListener(form, 'submit', function (e) {
             e.preventDefault();
             expect(form.childNodes.length).to.be(2);
             expect(sensibleInput.hasAttribute('name')).to.be(false);
