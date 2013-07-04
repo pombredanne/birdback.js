@@ -205,7 +205,7 @@ var __mocha_tests__ = [],
      __mocha_runner__,
     isMochaRunning = function () {
         return __mocha_runner__ !== null;
-    }
+    };
 
 document.addEventListener("DOMContentLoaded", function () {
      __mocha_runner__ = mocha.run().globals(['stats', 'report']).on('test end', function (test) {
