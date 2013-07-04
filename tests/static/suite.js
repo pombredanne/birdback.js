@@ -207,7 +207,7 @@ var __mocha_tests__ = [],
         return __mocha_runner__ !== null;
     };
 
-document.addEventListener("DOMContentLoaded", function () {
+Birdback.addEventListener(document, "DOMContentLoaded", function () {
      __mocha_runner__ = mocha.run().globals(['stats', 'report']).on('test end', function (test) {
         __mocha_tests__.push({title: test.title, state: test.state});
     });
