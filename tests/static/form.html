@@ -19,14 +19,16 @@
                     numberInput = document.querySelector('[name=number]');
 
                 // Adds luhn validation
-                Birdback.addEventListener(numberInput, 'input', function (e) {
-                    var value = numberInput.value;
-                    if (Birdback.validateCardNumber(value)) {
-                        numberInput.setCustomValidity('');
-                    } else {
-                        numberInput.setCustomValidity('Invalid card number');
-                    }
-                });
+                if (numberInput.setCustomValidity) {
+                    Birdback.addEventListener(numberInput, 'input', function (e) {
+                        var value = numberInput.value;
+                        if (Birdback.validateCardNumber(value)) {
+                            numberInput.setCustomValidity('');
+                        } else {
+                            numberInput.setCustomValidity('Invalid card number');
+                        }
+                    });
+                }
             });
         </script>
     </body>
