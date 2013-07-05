@@ -21,7 +21,7 @@
                 // Adds luhn validation
                 Birdback.addEventListener(numberInput, 'input', function (e) {
                     var value = numberInput.value;
-                    if (Birdback.luhn.validate(value)) {
+                    if (Birdback.validateCardNumber(value)) {
                         numberInput.setCustomValidity('');
                     } else {
                         numberInput.setCustomValidity('Invalid card number');
