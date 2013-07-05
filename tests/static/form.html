@@ -19,7 +19,7 @@
                     numberInput = document.querySelector('[name=number]');
 
                 // Adds luhn validation
-                numberInput.addEventListener('input', function (e) {
+                Birdback.addEventListener(numberInput, 'input', function (e) {
                     var value = numberInput.value;
                     if (Birdback.luhn.validate(value)) {
                         numberInput.setCustomValidity('');
