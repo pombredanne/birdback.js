@@ -141,16 +141,18 @@ suite('Birdback', function () {
             });
 
             test('should unset name attribute of given input', function () {
+                var initialName = sensibleInput.getAttribute('name');
                 birdback.encryptField(sensibleInput);
-                expect(sensibleInput.getAttribute('name')).to.be(null);
+                expect(sensibleInput.getAttribute('name')).not.to.be(initialName);
             });
         });
 
         suite('encryptForm', function () {
             test('should encrypt sensible fields', function () {
+                var initialName = sensibleInput.getAttribute('name');
                 birdback.encryptForm(form);
                 expect(form.childNodes.length).to.be(3);
-                expect(sensibleInput.hasAttribute('name')).to.be(false);
+                expect(sensibleInput.getAttribute('name')).not.to.be(initialName);
             });
 
             test('should not encrypt other fields', function () {
