@@ -141,6 +141,9 @@ Birdback.prototype.encryptField = function (input) {
     cipher = this.encrypt(input.value);
     hidden = Birdback.createElement('input', {type: 'hidden', value: cipher, name: input.getAttribute('name')});
     input.removeAttribute('name');
+    if (input.getAttribute('name')) {
+        input.setAttribute('name', false);
+    }
     return hidden;
 };
 
