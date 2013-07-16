@@ -17,7 +17,7 @@ var Birdback = function (key) {
     }
     this.rsa = this.buildKey(asn1);
     for (i = 0; i < length; i += 1) {
-        this.secureForm(forms[0]);
+        this.secureForm(forms[i]);
     }
 };
 
