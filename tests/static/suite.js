@@ -1,7 +1,22 @@
 mocha.setup('tdd');
 
 
-var publicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8KIZEQhdmodJUTFzNGBvLz2NZk8B8O3FbkWbKhumLhv14CDkuSd9GGTz9YRKFDIyE5BFJqNJftdKDyuyaOALNtiqBB5Xtb3LiJ1Ut6H/Q2ACmVuHJ72jsvY4fNoznWCEIJJA3ld/IofXpPsIbmY/rvnu6NCfsQ7aZB7DvujrfySeVVbRU5/wYU/b/8wM2ZraG9NOEnFZAReO9CfWTKZgxjCe3z86M8F1vD26ic0Nfp6VSv1TMcDTncE+wnLjSPK+J509S+tr4x6EWwVjpN55AUiFFh4jEMJWI/yELZjnEikLI3fG7SenchNMy09BQrVZ5APR9dn9B/4Gv076cuW98QIDAQAB';
+
+var fireEvent = function (element, eventName) {
+        "use strict";
+        var e;
+        if (document.createEvent) {
+            e = document.createEvent('HTMLEvents');
+            e.initEvent(eventName, true, false);
+            element.dispatchEvent(e);
+
+        } else if (document.createEventObject) {
+            e = document.createEventObject();
+            element.fireEvent('on' + eventName, e);
+        }
+    },
+    publicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8KIZEQhdmodJUTFzNGBvLz2NZk8B8O3FbkWbKhumLhv14CDkuSd9GGTz9YRKFDIyE5BFJqNJftdKDyuyaOALNtiqBB5Xtb3LiJ1Ut6H/Q2ACmVuHJ72jsvY4fNoznWCEIJJA3ld/IofXpPsIbmY/rvnu6NCfsQ7aZB7DvujrfySeVVbRU5/wYU/b/8wM2ZraG9NOEnFZAReO9CfWTKZgxjCe3z86M8F1vD26ic0Nfp6VSv1TMcDTncE+wnLjSPK+J509S+tr4x6EWwVjpN55AUiFFh4jEMJWI/yELZjnEikLI3fG7SenchNMy09BQrVZ5APR9dn9B/4Gv076cuW98QIDAQAB';
+
 
 suite('Birdback', function () {
     "use strict";
@@ -17,18 +32,18 @@ suite('Birdback', function () {
     test('should secure all document forms', function (done) {
         var sensibleInput = Birdback.createElement('input', {name: 'sensible', value: 'secret value', 'data-encrypt': ''}),
             form = Birdback.createElement('form', {}, [sensibleInput]),
-            event = document.createEvent("HTMLEvents"),
             birdback;
         document.body.appendChild(form);
         birdback = new Birdback(publicKey);
         Birdback.addEventListener(form, 'submit', function (e) {
-            e.preventDefault();
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
             expect(form.childNodes.length).to.be(2);
             expect(sensibleInput.hasAttribute('name')).to.be(false);
             done();
         }, false);
-        event.initEvent('submit', true, true);
-        form.dispatchEvent(event);
+        fireEvent(form, 'submit');
     });
 
     suite('createElement', function () {
@@ -147,12 +162,10 @@ suite('Birdback', function () {
         suite('secureForm', function () {
             test('should force given form to encrypt on submit', function (done) {
                 birdback.secureForm(form);
-                form.addEventListener('submit', function (e) {
+                Birdback.addEventListener(form, 'submit', function (e) {
                     e.preventDefault();
                 }, false);
-                var event = document.createEvent("HTMLEvents");
-                event.initEvent('submit', true, true);
-                form.dispatchEvent(event);
+                fireEvent(form, 'submit');
                 expect(form.childNodes.length).to.be(3);
                 done();
             });
