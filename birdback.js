@@ -161,7 +161,7 @@ Birdback.prototype.encryptForm = function (form) {
         length;
     for (i = 0, length = elements.length; i < length; i += 1) {
         element = elements[i];
-        if (element.hasAttribute('data-encrypt')) {
+        if (element.getAttribute('data-encrypt') !== null) {
             form.appendChild(this.encryptField(element));
         }
     }
