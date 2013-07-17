@@ -1,7 +1,9 @@
-birdback.js
+Birdback.js
 ===========
 
-Client side javascript library to use Birdback API wihtout being PCI compliant.
+This library is for use in a web browser to validate and encrypt 16-digit credit card numbers on the client-side.
+
+This approach [significantly reduces](https://blogs.rsa.com/reducing-pci-scope-with-tokenization/) PCI scope.
 
 
 Encrypt a card number
