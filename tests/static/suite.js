@@ -189,6 +189,24 @@ suite('Birdback', function () {
         test('should return false when invalid digits are given', function () {
             expect(Birdback.validateCardNumber('7500600000000061')).to.be(false);
         });
+
+        test('should return false when invalid digits are given even if valid to luhn', function () {
+            expect(Birdback.validateCardNumber('455')).to.be(false);
+        });
+    });
+
+    suite('cardNumberRegex', function(){
+        test('should return true when valid digits are given', function () {
+            expect(Birdback.cardNumberRegex.test('4500600000000061')).to.be.ok();
+        });
+
+        test('should return false when invalid digits are given', function () {
+            expect(Birdback.cardNumberRegex.test('8500600000000062')).not.to.be.ok();
+        });
+
+        test('should return false when valid digits are only part of the string', function () {
+            expect(Birdback.cardNumberRegex.test(' 4500600000000061 ')).not.to.be.ok();
+        });
     });
 
     suite('luhn', function () {
