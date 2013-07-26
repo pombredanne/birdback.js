@@ -206,8 +206,19 @@ Birdback.prototype.secureForm = function (form) {
  */
 Birdback.validateCardNumber = function (number) {
     "use strict";
-    return Birdback.luhn.validate(number);
+    return Birdback.cardNumberRegex.test(number) && Birdback.luhn.validate(number);
 };
+
+
+/**
+ * Regular expression used to validate a card number
+ *
+ * Acquired from http://www.regular-expressions.info/creditcard.html
+ */
+Birdback.cardNumberRegex = new RegExp([
+     '^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])'
+    ,'[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}'
+    ,'|(?:2131|1800|35\d{3})\d{11})$'].join(''));
 
 
 Birdback.luhn = {};
